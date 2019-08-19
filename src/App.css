@@ -3,13 +3,22 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  /* padding: 0;
+  margin: 0;
+  width: 100vw !important;
+  height: 100vh !important;
   background: linear-gradient(180deg, #386268 0%, rgba(52, 76, 80, 0.57) 100%),
-    url("./assets/light-cloud.png");
+    url("./assets/light-cloud.png") no-repeat !important;
 
-  background-size: cover;
-  background-position: center;
+  background-size: cover !important;
+  background-position: center !important; */
+
+  font-family: "Montserrat", sans-serif;
+  /* background: url("./assets/light-cloud.png") no-repeat; */
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("./assets/light-cloud.png") no-repeat;
+  padding: 0;
+  margin: 0;
 }
 
 .hr-ab {
@@ -17,6 +26,6 @@ body {
 }
 
 .image {
-  width: 5em;
-  height: 5em;
+  width: 5.5em;
+  height: 5.5em;
 }

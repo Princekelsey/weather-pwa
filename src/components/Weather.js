@@ -1,44 +1,72 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Spinner from "../utilities/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserLocation,
+  getWeatherByLocation1,
+  getWeatherByLocation2
+} from "../actions/weatherActions";
 
-const Weather = ({
-  city,
-  country,
-  celcius,
-  temp,
-  description,
-  weatherIcon,
-  isLoading,
-  temp2,
-  icon2,
-  today
-}) => {
+const Weather = ({ calCelcius, today }) => {
+  // get state from store
+  const city = useSelector(state => state.openWeather.cityName);
+  const description = useSelector(state => state.openWeather.description);
+  const temp1 = useSelector(state => calCelcius(state.openWeather.temp));
+  const temp2 = useSelector(state => state.apixuWeather.temp);
+  const isLoading = useSelector(state => state.isLoading);
+  const lat = useSelector(state => state.cordinates.lat);
+  const lon = useSelector(state => state.cordinates.lon);
+  const locationName = useSelector(state => state.cordinates.locationName);
+
+  // dispatch functions
+  const dispatch = useDispatch();
+  const location = () => dispatch(getUserLocation());
+  const getWeatherForLocation2 = name => dispatch(getWeatherByLocation2(name));
+  const getWeatherForLocation = (lat, lon) =>
+    dispatch(getWeatherByLocation1(lat, lon));
+
+  useEffect(() => {
+    location();
+    getWeather();
+  }, [lat]);
+
+  // initial to get weather on app load
+  const getWeather = () => {
+    getWeatherForLocation(lat, lon);
+    getWeatherForLocation2(locationName);
+  };
+
   return (
-    <div className="container  py-4 ">
-      {isLoading && <h1>Loading --</h1>}
-      {!isLoading && (
+    <div className="container text-center py-4 landing">
+      {isLoading ? (
+        <Spinner />
+      ) : (
         <div className="bg-transparent text-white">
           <div className=" text-white py-4 ">
             <h1>
-              {city}, {country}
+              {city}
+              <span>
+                <button
+                  type="button"
+                  className="btn btn-secondary ml-4 "
+                  data-toggle="modal"
+                  data-target="#formModal"
+                >
+                  Change location
+                </button>
+              </span>
             </h1>
-            <h4 className="">{description}</h4>
+
+            <h4 className=""> {description}</h4>
             <h6>{today}</h6>
           </div>
           <div className="">
             {/* <i className="wi wi-day-sunny display-3" /> */}
-            <img
-              src={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`}
-              alt="Weather icon"
-            />
-            <img className="image" src={icon2} alt="Weather icon2" />
 
             <h1>
-              <span className="px-4 ">{celcius}&deg;</span>
+              <span className="px-4 ">{temp1}&deg;</span>
               <span className="px-4 ">{temp2}&deg;</span>
             </h1>
-            <hr className="hr-ab " />
-            {minMaxTemp(temp.minTemp, temp.maxTemp)}
-            <hr className="hr-ab " />
           </div>
         </div>
       )}
