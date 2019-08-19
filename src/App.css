@@ -3,18 +3,8 @@
 }
 
 body {
-  /* padding: 0;
-  margin: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: linear-gradient(180deg, #386268 0%, rgba(52, 76, 80, 0.57) 100%),
-    url("./assets/light-cloud.png") no-repeat !important;
-
-  background-size: cover !important;
-  background-position: center !important; */
-
+  font-display: swap;
   font-family: "Montserrat", sans-serif;
-  /* background: url("./assets/light-cloud.png") no-repeat; */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("./assets/light-cloud.png") no-repeat;
   padding: 0;

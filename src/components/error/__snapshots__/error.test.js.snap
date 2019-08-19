@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches the snapshot 1`] = `
+<div
+  className="center text-white"
+>
+  <h3>
+    Error getting Weatherinformation
+  </h3>
+  <p>
+    Please make sure your location gps is enabled and give application access
+  </p>
+</div>
+`;

@@ -8,7 +8,7 @@ import {
   SET_LOADING
 } from "../actions/types";
 
-const initialState = {
+export const initialState = {
   openWeather: {
     cityName: "",
     description: "",

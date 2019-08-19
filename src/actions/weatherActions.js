@@ -72,9 +72,15 @@ export const getWeatherByCity = cityName => async dispatch => {
   await axios
     .get(URL)
     .then(res => {
+      const file = {
+        cityName: res.data.name,
+        description: res.data.weather[0].description,
+        temp: res.data.main.temp,
+        icon: res.data.weather[0].icon
+      };
       dispatch({
         type: GET_WEATHER_BY_CITY1,
-        payload: res.data
+        payload: file
       });
     })
     .catch(err => {
@@ -91,9 +97,17 @@ export const getWeatherByCity2 = cityName => async dispatch => {
   await axios
     .get(URL)
     .then(res => {
+      const file = {
+        temp: Math.floor(res.data.current.temp_c),
+        feel: Math.floor(res.data.current.feelslike_c),
+        icon: res.data.current.condition.icon,
+        humidity: res.data.current.humidity,
+        visibility: res.data.current.vis_km,
+        forecast: res.data.forecast.forecastday
+      };
       dispatch({
         type: GET_WEATHER_BY_CITY2,
-        payload: res.data
+        payload: file
       });
     })
     .catch(err => {

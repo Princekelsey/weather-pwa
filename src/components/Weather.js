@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "../utilities/Spinner";
 import { useDispatch, useSelector } from "react-redux";
+import Error from "../components/error/Error";
 import {
   getUserLocation,
   getWeatherByLocation1,
@@ -8,15 +9,18 @@ import {
 } from "../actions/weatherActions";
 
 const Weather = ({ calCelcius, today }) => {
+  const [coordinates, setCoordinates] = useState({ lati: 0, long: 0 });
+  const [error, setError] = useState(false);
+
   // get state from store
   const city = useSelector(state => state.openWeather.cityName);
+  const errorLoad = useSelector(state => state.error);
   const description = useSelector(state => state.openWeather.description);
   const temp1 = useSelector(state => calCelcius(state.openWeather.temp));
   const temp2 = useSelector(state => state.apixuWeather.temp);
   const isLoading = useSelector(state => state.isLoading);
-  const lat = useSelector(state => state.cordinates.lat);
-  const lon = useSelector(state => state.cordinates.lon);
   const locationName = useSelector(state => state.cordinates.locationName);
+  const weatherIcon = useSelector(state => state.openWeather.icon);
 
   // dispatch functions
   const dispatch = useDispatch();
@@ -26,14 +30,34 @@ const Weather = ({ calCelcius, today }) => {
     dispatch(getWeatherByLocation1(lat, lon));
 
   useEffect(() => {
+    getLocation();
     location();
     getWeather();
-  }, [lat]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coordinates.lati]);
 
   // initial to get weather on app load
   const getWeather = () => {
-    getWeatherForLocation(lat, lon);
+    getWeatherForLocation(coordinates.lati, coordinates.long);
     getWeatherForLocation2(locationName);
+  };
+
+  // get location coordinates
+  const getLocation = () => {
+    const navigation = navigator.geolocation;
+    if (navigation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      setError(true);
+    }
+  };
+
+  const showPosition = position => {
+    setCoordinates({
+      ...coordinates,
+      lati: position.coords.latitude,
+      long: position.coords.longitude
+    });
   };
 
   return (
@@ -60,6 +84,13 @@ const Weather = ({ calCelcius, today }) => {
             <h4 className=""> {description}</h4>
             <h6>{today}</h6>
           </div>
+
+          <img
+            src={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`}
+            className=""
+            alt="Weather icon"
+          />
+
           <div className="">
             {/* <i className="wi wi-day-sunny display-3" /> */}
 
@@ -70,19 +101,7 @@ const Weather = ({ calCelcius, today }) => {
           </div>
         </div>
       )}
-    </div>
-  );
-};
-
-// min and max tem
-const minMaxTemp = (min, max) => {
-  return (
-    <div className="py-4">
-      <h6>Average Temperature</h6>
-      <h3>
-        <span className="px-4">{min}&deg;</span>
-        <span className="px-4">{max}&deg;</span>
-      </h3>
+      {error || errorLoad ? <Error /> : null}
     </div>
   );
 };

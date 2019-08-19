@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  getWeatherByCity,
+  getWeatherByCity2
+} from "../../actions/weatherActions";
 
-const Form = ({ handleChange, handleSubmit, cityName }) => {
+const Form = () => {
+  const [cityName, setCityName] = useState("");
+
+  // initialize didpatch
+  const dispatch = useDispatch();
+  const getWeather1 = city => dispatch(getWeatherByCity(city));
+  const getWeather2 = city => dispatch(getWeatherByCity2(city));
+
+  const handleChange = e => {
+    setCityName(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    getWeather1(cityName);
+    getWeather2(cityName);
+    setCityName("");
+  };
+
   return (
     <div
       className="modal fade"
@@ -29,6 +52,7 @@ const Form = ({ handleChange, handleSubmit, cityName }) => {
             <div className="input-group input-group-sm mb-3">
               <div className="input-group-prepend" />
               <input
+                aria-label = 'choose city'
                 type="text"
                 className="form-control"
                 placeholder="City Name"

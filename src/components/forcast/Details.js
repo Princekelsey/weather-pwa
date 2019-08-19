@@ -2,12 +2,12 @@ import React from "react";
 import Spinner from "../../utilities/Spinner";
 import { useSelector } from "react-redux";
 
-const Details = () => {
+const Details = ({ calCelcius }) => {
   const weatherIcon = useSelector(state => state.openWeather.icon);
   const feelsLike = useSelector(state => state.apixuWeather.feel);
   const humidity = useSelector(state => state.apixuWeather.humidity);
   const visibility = useSelector(state => state.apixuWeather.visibility);
-  const temp1 = useSelector(state => state.openWeather.temp);
+  const temp1 = useSelector(state => calCelcius(state.openWeather.temp));
   const temp2 = useSelector(state => state.apixuWeather.temp);
   const forecast = useSelector(state => state.apixuWeather.forecast);
   const isLoading = useSelector(state => state.isLoading);
