@@ -3,7 +3,7 @@ import Spinner from "../../utilities/Spinner";
 import { useSelector } from "react-redux";
 
 const Details = ({ calCelcius }) => {
-  const weatherIcon = useSelector(state => state.openWeather.icon);
+  const weatherIcon = useSelector(state => state.apixuWeather.icon);
   const feelsLike = useSelector(state => state.apixuWeather.feel);
   const humidity = useSelector(state => state.apixuWeather.humidity);
   const visibility = useSelector(state => state.apixuWeather.visibility);
@@ -12,6 +12,7 @@ const Details = ({ calCelcius }) => {
   const forecast = useSelector(state => state.apixuWeather.forecast);
   const isLoading = useSelector(state => state.isLoading);
   const description = useSelector(state => state.openWeather.description);
+  const errorLoad = useSelector(state => state.error);
 
   return (
     <div>
@@ -26,9 +27,9 @@ const Details = ({ calCelcius }) => {
               <div className="d-flex justify-content-center">
                 <div>
                   <img
-                    src={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`}
-                    className=""
-                    alt="..."
+                    src={weatherIcon}
+                    className="image"
+                    alt="icon"
                   />
                 </div>
 
@@ -79,6 +80,7 @@ const Details = ({ calCelcius }) => {
           </div>
         </div>
       )}
+      {errorLoad && null}
     </div>
   );
 };

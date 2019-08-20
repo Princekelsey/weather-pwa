@@ -11,7 +11,7 @@ import { API_KEY, APIXU_KEY } from "../utilities/index";
 import axios from "axios";
 
 export const getWeatherByLocation1 = (lat, lon) => async dispatch => {
-  const URL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+  const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
   dispatch(setLoading());
   await axios
     .get(URL)
@@ -36,7 +36,7 @@ export const getWeatherByLocation1 = (lat, lon) => async dispatch => {
 };
 
 export const getWeatherByLocation2 = locationName => async dispatch => {
-  const URL = `http://api.apixu.com/v1/forecast.json?key=${APIXU_KEY}&q=${locationName} &days=3`;
+  const URL = `https://api.apixu.com/v1/forecast.json?key=${APIXU_KEY}&q=${locationName} &days=3`;
   dispatch(setLoading());
   await axios
     .get(URL)
@@ -67,7 +67,7 @@ export const setLoading = () => ({
 });
 
 export const getWeatherByCity = cityName => async dispatch => {
-  const URL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
+  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
   dispatch(setLoading());
   await axios
     .get(URL)
@@ -92,7 +92,7 @@ export const getWeatherByCity = cityName => async dispatch => {
 };
 
 export const getWeatherByCity2 = cityName => async dispatch => {
-  const URL = `http://api.apixu.com/v1/forecast.json?key=${APIXU_KEY}&q=${cityName} &days=3`;
+  const URL = `https://api.apixu.com/v1/forecast.json?key=${APIXU_KEY}&q=${cityName} &days=3`;
   dispatch(setLoading());
   await axios
     .get(URL)

@@ -20,7 +20,7 @@ const Weather = ({ calCelcius, today }) => {
   const temp2 = useSelector(state => state.apixuWeather.temp);
   const isLoading = useSelector(state => state.isLoading);
   const locationName = useSelector(state => state.cordinates.locationName);
-  const weatherIcon = useSelector(state => state.openWeather.icon);
+  const weatherIcon = useSelector(state => state.apixuWeather.icon);
 
   // dispatch functions
   const dispatch = useDispatch();
@@ -86,17 +86,19 @@ const Weather = ({ calCelcius, today }) => {
           </div>
 
           <img
-            src={`http://openweathermap.org/img/wn/${weatherIcon}@2x.png`}
-            className=""
-            alt="Weather icon"
+            src={weatherIcon}
+            className="image"
+            alt="icon"
           />
 
           <div className="">
-            {/* <i className="wi wi-day-sunny display-3" /> */}
+            
 
             <h1>
-              <span className="px-4 ">{temp1}&deg;</span>
-              <span className="px-4 ">{temp2}&deg;</span>
+              {temp1 ? <span className="px-4 ">{temp1}&deg;</span> : null}
+              {temp2 ?  <span className="px-4 ">{temp2}&deg;</span>: null}
+              
+            
             </h1>
           </div>
         </div>
